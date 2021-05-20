@@ -21,7 +21,8 @@
     // window.addEventListener("hashchange", fn);
 
     let fn = function () {
-        app.innerHTML = window.location.pathname;
+        
+        document.querySelector('body').appendChild(document.createTextNode(window.location.pathname));
     }
     function goA() {
         history.pushState({},null,'/a');
