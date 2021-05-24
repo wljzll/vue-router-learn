@@ -11,6 +11,10 @@ export default function install(Vue, options) {
                 this._routerRoot = this; // 给当前跟组件增加一个属性 _routerRoot 代表的就是自己
                 this._router = this.$options.router; // 用户传入的router实例
                 this._router.init(this); // 这里的this就是Vue的根实例
+                // 如何获取到current属性 将current属性定义在_route上
+                // 当current变化后 更新_route属性
+                // 如果current中的path或者matched的其他属性变化 也是响应式的
+                Vue.util.defineReactive(this, '_route', this._router.history.current);
             } else {
                 // 组件渲染是一层层的渲染
                 this._routerRoot = this.$parent && this.$parent._routerRoot;

@@ -1,5 +1,5 @@
 import createRouteMap from "./create-route-map";
-
+import { createRoute } from './history/base'
 export default function createMatcher(routes) {
     // pathMap = {'/': Home, '/about': About, '/about/a': AboutA}
 
@@ -9,10 +9,19 @@ export default function createMatcher(routes) {
         createRouteMap(routes, pathMap)
     }
 
-    console.log(pathMap);
+    // console.log(pathMap);
 
-    function match() {
+    function match(location) {
+        let record = pathMap[location]; // 可能一个路径有多个记录
+        if (record) {
+            return createRoute(record, {
+                path: location
+            })
+        }
 
+        return createRoute(null, {
+            path: location
+        })
     }
 
     return {

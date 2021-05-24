@@ -41,5 +41,5 @@ router.matcher.addRoutes([{
     }
 }])
 
-console.log(router);
+{ /* console.log(router); */ }
 export default router
