@@ -13,6 +13,7 @@ export default function createMatcher(routes) {
 
     function match(location) {
         let record = pathMap[location]; // 可能一个路径有多个记录
+        // 如果不存在这个路径,则创建这个record
         if (record) {
             return createRoute(record, {
                 path: location

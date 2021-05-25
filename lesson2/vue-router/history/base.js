@@ -14,6 +14,7 @@ export function createRoute(record, location) {
 
 class History {
     constructor(router) {
+        // 获取router实例
         this.router = router
             // 当我们创建完路由后，先有一个默认值：路径和匹配到的记录做成一个映射表
             // 默认 当创建history时 路径应该是 / 这时候时没有匹配记录的

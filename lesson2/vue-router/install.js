@@ -1,4 +1,6 @@
 export let _Vue;
+import routerLink from './components/link'
+import routerView from './components/view'
 export default function install(Vue, options) {
     // 插件安装的入口
     _Vue = Vue; // 这样别的文件都可以使用Vue变量
@@ -26,13 +28,16 @@ export default function install(Vue, options) {
     })
 
     // 插件一般用于定义全局组件、全局指令、过滤器、原型方法......
-    Vue.component('router-link', {
-        render: h => h('a', {}, '')
+    Vue.component('router-link', routerLink)
+    Vue.component('router-view', routerView)
+    Object.defineProperty(Vue.prototype, '$route', {
+        get() {
+            return this._routerRoot._route; // path matched
+        }
     })
-    Vue.component('router-view', {
-        render: h => h('a', {}, '')
+    Object.defineProperty(Vue.prototype, '$router', {
+        get() {
+            return this._routerRoot._router; // push go replace
+        }
     })
-
-    Vue.prototype.$route = {};
-    Vue.prototype.$router = {};
 }

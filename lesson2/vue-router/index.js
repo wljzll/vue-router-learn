@@ -25,19 +25,27 @@ class VueRouter {
     init(app) { // 初始化
         // 监听hash值变化 默认跳转到对应的路径中
         const history = this.history;
+
         const setUpHashListener = () => {
             history.setupListener(); // 监听路由变化 hashchange
         }
 
         // 初始化 会先获得当前的hash值进行跳转 并且监听hash变化
         history.transitionTo(
-                history.getCurrentLocation(), // 获取当前位置
-                setUpHashListener
-            )
-            // 每次路径变化都会调用此方法
+            history.getCurrentLocation(), // 获取当前位置
+            setUpHashListener
+        )
+
+        // 每次路径变化都会调用此方法 _route变化会触发视图更新
         history.listen((route) => {
             app._route = route;
         })
+    }
+    push(to) {
+        this.history.push(to)
+    }
+    go() {
+
     }
     match(location) {
         return this.matcher.match(location);
