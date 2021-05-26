@@ -1,7 +1,7 @@
-import Vue from 'vue';
-import Router from './vue-router/index'; // Router是一个插件
-import Home from './views/Home';
-import About from './views/About';
+import Vue from "vue";
+import Router from "./vue-router/index"; // Router是一个插件
+import Home from "./views/Home";
+import About from "./views/About";
 
 Vue.use(Router);
 // 使用这个插件，内部会提供两个全局组件 router-link/router-view
@@ -9,37 +9,43 @@ Vue.use(Router);
 
 // 路由：不同的路径，渲染不同的组件
 const router = new Router({
-    mode: 'hash',
-    routes: [{
-            path: '/',
-            component: Home,
+  mode: "hash",
+  routes: [
+    {
+      path: "/",
+      component: Home,
+    },
+    {
+      path: "/about",
+      component: About,
+      children: [
+        {
+          path: "a", // 这里如果使用了 / 写成 /a 就是指根路径不是子路由了
+          component: {
+            render: (h) => <h1> about A </h1>,
+          },
         },
         {
-            path: '/about',
-            component: About,
-            children: [{
-                    path: 'a', // 这里如果使用了 / 写成 /a 就是指根路径不是子路由了
-                    component: {
-                        render: (h) => < h1 > about A < /h1>
-                    }
-                },
-                {
-                    path: 'b',
-                    component: {
-                        render: (h) => < h1 > about B < /h1>
-                    }
-                }
-            ]
-        }
-    ]
-})
+          path: "b",
+          component: {
+            render: (h) => <h1> about B </h1>,
+          },
+        },
+      ],
+    },
+  ],
+});
 
-router.matcher.addRoutes([{
-    path: '/auth',
-    component: {
-        render: h => < h1 > auth < /h1> 
-    }
-}])
+// router.matcher.addRoutes([
+//   {
+//     path: "/auth",
+//     component: {
+//       render: (h) => <h1> auth </h1>,
+//     },
+//   },
+// ]);
 
-{ /* console.log(router); */ }
-export default router
+{
+  /* console.log(router); */
+}
+export default router;

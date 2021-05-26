@@ -1,11 +1,11 @@
-import createMatcher from "./crate-matcher";
+import createMatcher from "./create-matcher";
 import HashHistory from "./history/hash";
 import BrowserHistory from "./history/history";
 import install from "./install";
 
 class VueRouter {
     constructor(options) {
-        // 创建匹配其 可用于后续的匹配操作
+        // 创建匹配器 可用于后续的匹配操作
         // 用户没有传递配置 就默认传入一个空数组
         // 1、match通过路由来匹配组件
         // 2、addRoutes 动态添加匹配规则
