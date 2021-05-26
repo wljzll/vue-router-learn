@@ -12,6 +12,7 @@ export function createRoute(record, location) {
     }
 }
 
+
 class History {
     constructor(router) {
         // 获取router实例
@@ -25,6 +26,7 @@ class History {
         console.log(this.current);
     }
     listen(cb) {
+        // 将cb保存到实例上
         this.cb = cb;
     }
     transitionTo(location, onComplete) {
@@ -37,11 +39,38 @@ class History {
             return;
         }
 
-        this.updateRoute(route);
-        console.log(route, 'route');
-        // 根据路径加载不同的组件
-        // console.log(location);
-        onComplete && onComplete();
+        // beforeEach钩子函数函数参数组成的数组
+        let queue = [].concat(this.router.beforeHooks);
+
+        function runQueue(queue, iterator, cb) {
+            function step(index) {
+                // 所有钩子执行完成，执行cb，更新页面
+                if (index >= queue.length) return cb();
+                // 拿到beforeHooks中对应的函数
+                let hook = queue[index];
+                // 交给iterator执行
+                iterator(hook, () => step(index + 1))
+            }
+            step(0)
+        }
+
+        const iterator = (hook, next) => {
+                hook(this.current, route, () => {
+                    next();
+                })
+            }
+            /**
+             * queue: beforeEach钩子函数函数参数组成的数组
+             */
+        runQueue(queue, iterator, () => {
+            this.updateRoute(route);
+            console.log(route, 'route');
+            // 根据路径加载不同的组件
+            // console.log(location);
+            onComplete && onComplete();
+        })
+
+
     }
     updateRoute(route) {
         this.current = route; // 每次路由切换都会更改current属性 
