@@ -9,29 +9,31 @@ Vue.use(Router);
 
 // 路由：不同的路径，渲染不同的组件
 const router = new Router({
-    mode: "hash",
-    routes: [{
-            path: "/",
-            component: Home,
+  mode: "hash",
+  routes: [
+    {
+      path: "/",
+      component: Home,
+    },
+    {
+      path: "/about",
+      component: About,
+      children: [
+        {
+          path: "a", // 这里如果使用了 / 写成 /a 就是指根路径不是子路由了
+          component: {
+            render: (h) => <h1> about A </h1>,
+          },
         },
         {
-            path: "/about",
-            component: About,
-            children: [{
-                    path: "a", // 这里如果使用了 / 写成 /a 就是指根路径不是子路由了
-                    component: {
-                        render: (h) => < h1 > about A < /h1>,
-                    },
-                },
-                {
-                    path: "b",
-                    component: {
-                        render: (h) => < h1 > about B < /h1>,
-                    },
-                },
-            ],
+          path: "b",
+          component: {
+            render: (h) => <h1> about B </h1>,
+          },
         },
-    ],
+      ],
+    },
+  ],
 });
 
 // router.matcher.addRoutes([
@@ -44,15 +46,15 @@ const router = new Router({
 // ]);
 
 router.beforeEach((from, to, next) => {
-    console.log(1);
-    setTimeout(() => {
-        next();
-    }, 1000);
-})
+  console.log(1);
+  setTimeout(() => {
+    next();
+  }, 1000);
+});
 router.beforeEach((from, to, next) => {
-    console.log(2);
-    setTimeout(() => {
-        next();
-    }, 1000);
-})
+  console.log(2);
+  setTimeout(() => {
+    next();
+  }, 1000);
+});
 export default router;
