@@ -58,7 +58,18 @@ class History {
     // beforeEach钩子函数函数参数组成的数组
     let queue = [].concat(this.router.beforeHooks);
     
+    /**
+     * 
+     * @param {Array} queue beforeHooks组成的声明周期钩子 
+     * @param {*} iterator 迭代器
+     * @param {*} cb 回调函数
+     */
     function runQueue(queue, iterator, cb) {
+      /**
+       * 步进执行queue
+       * @param {*} index queue的索引
+       * @returns 
+       */
       function step(index) {
         // 所有钩子执行完成，执行cb，更新页面
         if (index >= queue.length) return cb();
@@ -67,6 +78,7 @@ class History {
         // 交给iterator执行
         iterator(hook, () => step(index + 1));
       }
+      // 默认执行第一个queue
       step(0);
     }
 

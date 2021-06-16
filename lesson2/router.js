@@ -49,12 +49,12 @@ router.beforeEach((from, to, next) => {
 //   console.log(1);
   setTimeout(() => {
     next();
-  }, 1000);
+  }, 0);
 });
 router.beforeEach((from, to, next) => {
 //   console.log(2);
   setTimeout(() => {
     next();
-  }, 1000);
+  }, 0);
 });
 export default router;
