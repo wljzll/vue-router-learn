@@ -6,4 +6,4 @@ const vm = new Vue({
     return h('h1', {}, 'hello')
     }
 })
-console.log(vm);
+// console.log(vm);

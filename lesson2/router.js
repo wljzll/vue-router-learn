@@ -46,13 +46,13 @@ const router = new Router({
 // ]);
 
 router.beforeEach((from, to, next) => {
-  console.log(1);
+//   console.log(1);
   setTimeout(() => {
     next();
   }, 1000);
 });
 router.beforeEach((from, to, next) => {
-  console.log(2);
+//   console.log(2);
   setTimeout(() => {
     next();
   }, 1000);
