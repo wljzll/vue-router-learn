@@ -17,9 +17,9 @@ export default function createRouteMap(routes, oldPathMap) {
     }
 }
 
-// 先序深度遍历
 /**
- * 
+ * 先序深度遍历
+ * @description 将传入的路由拍平天啊及到路由映射表[pathMap]中
  * @param {*} route 每一个路由
  * @param {*} pathMap 拍平后的路由表对象
  * @param {*} parent 当前路由的父路由

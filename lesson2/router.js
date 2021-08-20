@@ -22,13 +22,13 @@ const router = new Router({
         {
           path: "a", // 这里如果使用了 / 写成 /a 就是指根路径不是子路由了
           component: {
-            render: (h) => <h1> about A </h1>,
+            render: () => <h1> about A </h1>,
           },
         },
         {
           path: "b",
           component: {
-            render: (h) => <h1> about B </h1>,
+            render: () => <h1> about B </h1>,
           },
         },
       ],

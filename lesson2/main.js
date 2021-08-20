@@ -11,4 +11,4 @@ const vm = new Vue({
         },
 
     })
-    // console.log(vm);
+    console.log(vm);

@@ -2,7 +2,7 @@ import createRouteMap from "./create-route-map";
 import { createRoute } from "./history/base";
 
 /**
- *
+ * @description 
  * @param {Array} routes 用户配置的路由表
  * @returns
  */
@@ -74,7 +74,8 @@ export default function createMatcher(routes) {
    * @returns 根据当前路径匹配到
    */
   function match(location) {
-    let record = pathMap[location]; // 可能一个路径有多个记录因为需要包含父元素
+    // 可能一个路径有多层记录因为需要包含父元素
+    let record = pathMap[location]; 
 
     if (record) {
       return createRoute(record, {
@@ -89,7 +90,7 @@ export default function createMatcher(routes) {
   }
 
   return {
-    addRoutes, // 添加路由
-    match, // 匹配路径
+    addRoutes, // 添加路由的方法
+    match, // 返回匹配路径信息的方法
   };
 }
