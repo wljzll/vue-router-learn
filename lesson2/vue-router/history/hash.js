@@ -16,12 +16,13 @@ function getHash() {
 
 class HashHistory extends History {
   constructor(router) {
+    
     super(router);
     // 保存router实例
     this.router = router;
-
     // 确保hash模式下 有一个 / 路径
     ensureSlash();
+    
   }
   getCurrentLocation() {
     return getHash();
@@ -32,6 +33,7 @@ class HashHistory extends History {
       window.location.hash = location;
     });
   }
+  // 绑定hashchange事件
   setupListener() {
     window.addEventListener("hashchange", () => {
       // 当hash变化了 再次拿到hash值进行跳转

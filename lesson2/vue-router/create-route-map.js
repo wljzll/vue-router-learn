@@ -9,7 +9,7 @@ export default function createRouteMap(routes, oldPathMap) {
     
     // 遍历路由表 拍平处理
     routes.forEach(route => {
-        addRouteReacord(route, pathMap);
+        addRouteRecord(route, pathMap);
     })
 
     return {
@@ -24,7 +24,7 @@ export default function createRouteMap(routes, oldPathMap) {
  * @param {*} pathMap 拍平后的路由表对象
  * @param {*} parent 当前路由的父路由
  */
-function addRouteReacord(route, pathMap, parent) { // parent就是父亲
+function addRouteRecord(route, pathMap, parent) { // parent就是父亲
     // 如果有父路由将父路由拼接上
     let path = parent ? parent.path + '/' + route.path : route.path;
     // 组件record对象
@@ -43,7 +43,7 @@ function addRouteReacord(route, pathMap, parent) { // parent就是父亲
     if (route.children) {
         route.children.forEach(childRoute => {
             // 在遍历儿子时，将父亲的记录传进去
-            addRouteReacord(childRoute, pathMap, record);
+            addRouteRecord(childRoute, pathMap, record);
         })
     }
 }

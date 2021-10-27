@@ -41,7 +41,7 @@ class VueRouter {
 
     // 初始化 会先获得当前的hash值进行跳转 并且监听hash变化
     history.transitionTo(
-      history.getCurrentLocation(), // 获取路径中的hash值
+      history.getCurrentLocation(), // 获取当前路径中的hash值  /
       setUpHashListener
     );
 
@@ -54,7 +54,7 @@ class VueRouter {
       // 更新_route
       app._route = route;
     });
-  }
+  } // end init
   push(to) {
     this.history.push(to);
   }
@@ -136,3 +136,78 @@ export default VueRouter;
  *  3.2) 调用history原型上的transitionTo()方法:
  *  3.3) 调用history原型上的listen()方法:
  */ 
+
+
+/**
+ * VueRouter初始化流程：
+ * 
+ * 1. 开发者调用 Vue.use(VueRouter) 注册VueRouter插件
+ *    1.1) 调用VueRouter.install()方法
+ *    1.2) 全局混入beforeCreate()生命周期函数
+ *    1.3) 注册router-link和router-view组件
+ *    1.4) 在Vue实例上定义$route属性和$router方法
+ * 
+ * 2. 开发者创建router实例 new Router(options)
+ *    2.1) 执行constructor(options)
+ *         2.1.1) 调用createMatcher(routes)方法拍平路由并定义几个方法
+ *         2.1.2) 根据不同的mode，创建不同的History实例
+ *    2.2) 定义init()方法
+ *    2.3) 定义push()方法
+ *    2.4) 定义match()方法
+ *    2.5) 定义beforeEach()方法
+ */
+
+/**
+ * 2.1.1) createMatcher(routes)流程：
+ * 1) 调用 createRouteMap(routes)拍平路由配置
+ * 2) 定义addRoutes(routes)方法，支持动态添加路由
+ * 3) 定义match(location)方法，返回当前location对应的路由配置
+ * 4) 返回addRoutes()和match()方法
+ */
+
+/**
+ * createRouteMap(routes)流程：
+ *  1) 复用或创建映射表，就是一个对象
+ *  2) 遍历路由表routes，调用addRouteRecord(route, pathMap)
+ *  3) 返回pathMap
+ * 
+ * addRouteRecord(route, pathMap, parent)流程：
+ *  1) 判断有无父路由，如果有父路由，将父路由拼接上
+ *  2) 声明record对象{path, component, parent }
+ *  3) 创建path和record的映射 - 这里会做去重判断
+ *  4) 深度遍历儿子
+ */
+
+// hashHistory实例创建流程：
+/**
+ * 1. 执行constructor(router)传入路由实例
+ * 2. 执行super(router) 继承History根类
+ * 3. 执行History根类的constructor()
+ *    3.1) 将router实例保存到当前History实例上
+ *    3.2) 定义current属性
+ *    3.3) 定义getCurrentLocation()方法
+ *    3.4) 定义push()方法
+ *    3.5) 定义setupListener()方法
+ * 4. 将router实例保存到当前HashHistory实例上
+ * 5. 在当前url上添加hash，确保是路径是hash
+ * 6. 定义getCurrentLocation()方法
+ * 7. 定义push()方法
+ * 8. 定义setupListener()方法
+ */
+
+
+/**
+ * 开发者初始化Vue根实例，调用router实例的init()方法
+ * 1. 定义setUpHashListener()函数，函数中执行history.setupListener()方法，这个方法是绑定hashchange事件
+ * 2. 执行history.transitionTo()方法 - 将history.getCurrentLocation()方法的返回值和setUpHashListener函数作为参数
+ * 3. 执行history.listen()方法 - 定义一个函数作为参数，函数中执行 app._route = route 更新Vue实例的_route属性
+ */
+
+
+/**
+ * transitionTo(location, onComplete) - onComplete是绑定hashchange或者pushstate事件监听 所以只会执行一次
+ * 1. 根据location从路由映射表中获取当前路由相关信息
+ * 2. 如果是相同路由不再跳转
+ * 3. 执行beforeHooks钩子函数
+ * 4. 最后一个beforeHooks执行完成后，执行updateRoute()方法，更新vue实例的_route属性，触发页面更新
+ */

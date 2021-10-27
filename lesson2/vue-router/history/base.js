@@ -5,7 +5,6 @@
  * @returns  {path: '/', matched: [{component: '', parent: '', path: ''}]}
  */
 export function createRoute(record, location) {
-  console.log(record, 'record');
   let res = []; // ['/about', '/about/a']
   // 如果record也就是对应的路由信息存在
   if (record) {
@@ -22,7 +21,7 @@ export function createRoute(record, location) {
 
 class History {
   constructor(router) {
-    // 获取router实例
+    // 保存router实例到History实例上
     this.router = router;
 
     // 创建history时，路径中的路由默认是 /  this.current = {path: '/', matched: []}
@@ -31,6 +30,7 @@ class History {
     });
 
   }
+  // 保存传入的更新 app._route的方法 当hash变化后 再次执行cb 触发Vue页面更新
   listen(cb) {
     // 将cb保存到实例上
     this.cb = cb;
@@ -49,8 +49,8 @@ class History {
     // 跳转时都会调用此方法 from to......
     // 路径变化了 视图还要刷新  响应式数据
     let route = this.router.match(location); // 当前最新的匹配到的结果
-    console.log(route, 'matchmatchmatch');
     // 防止重复跳转
+    debugger
     if (
       location == this.current.path &&
       route.matched.length == this.current.matched.length
@@ -68,11 +68,6 @@ class History {
      * @param {*} cb 回调函数 回调函数执行:1)执行updateRoute()函数,修改current,触发页面更新;2)执行onComplete,改变url的hash,实现url的改变
      */
     function runQueue(queue, iterator, cb) {
-      /**
-       * 步进执行queue
-       * @param {*} index queue的索引
-       * @returns 
-       */
       function step(index) {
         // 所有钩子执行完成，执行cb，更新页面
         if (index >= queue.length) return cb();
@@ -99,7 +94,7 @@ class History {
     // queue: beforeEach钩子函数函数参数组成的数组
     runQueue(queue, iterator, () => {
       this.updateRoute(route);
-      // 根据路径加载不同的组件
+      // 绑定hashchange或pushstate事件监听
       onComplete && onComplete();
     });
   }
